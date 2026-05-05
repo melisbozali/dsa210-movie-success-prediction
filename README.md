@@ -110,3 +110,12 @@ Overall, socio-economic conditions play an important role in marital stability.
 
 - `eda.ipynb`: Contains data cleaning and exploratory data analysis (plots and visual insights)
 - `ml_analysis.ipynb`: Contains machine learning models and performance evaluation
+
+## Reproducibility
+
+To reproduce this project:
+
+1. Install required libraries:
+   pip install -r requirements.txt
+2. Run `eda.ipynb` first  
+3. Then run `ml_analysis.ipynb`
