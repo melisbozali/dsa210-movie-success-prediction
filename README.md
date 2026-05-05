@@ -64,13 +64,22 @@ To address class imbalance, `class_weight = balanced` was used where applicable.
 
 ## Model Results
 
-- KNN achieved high accuracy but very low recall, failing to identify divorced individuals effectively
-- Logistic Regression provided balanced but moderate performance
-- Decision Tree improved recall significantly
-- Random Forest achieved the highest recall and performed best overall
+The following models were tested:
 
-Random Forest was selected as the best model due to its ability to detect the minority class.
+- Logistic Regression
+- K-Nearest Neighbors (KNN)
+- Decision Tree
+- Random Forest
 
+Because the dataset is imbalanced, recall was prioritized over accuracy.
+
+Main results:
+
+- Logistic Regression achieved the highest recall and was selected as the best model.
+- Decision Tree and Random Forest also performed well in recall.
+- KNN achieved high accuracy but very low recall, meaning it failed to identify divorced individuals effectively.
+
+Overall, Logistic Regression was the most suitable model for this project because the main goal was to correctly identify divorced individuals in the minority class.
 ---
 
 ## Confounding Variables
