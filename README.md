@@ -105,3 +105,8 @@ Overall, socio-economic conditions play an important role in marital stability.
 ├── README.md
 ├── requirements.txt
 ├── data/ (ignored)
+
+## Notebooks
+
+- `eda.ipynb`: Contains data cleaning and exploratory data analysis (plots and visual insights)
+- `ml_analysis.ipynb`: Contains machine learning models and performance evaluation
