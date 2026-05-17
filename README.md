@@ -1,130 +1,61 @@
-# DSA210 Project - Divorce Analysis
+# Divorce Analysis Using IPUMS USA Data
 
-## Project Overview
-This project originally aimed to predict movie success, but it was later updated to analyze divorce patterns using IPUMS US Census data.
+## Motivation
 
-This project analyzes the relationship between divorce probability and socio-economic factors such as age, education level, and income. The goal is to understand whether these variables have a statistically significant effect on divorce outcomes.
+I chose this project because divorce is both a personal and social topic. It is not only about individual relationships, but also connected with age, education, income, employment, and other socio-economic conditions. I wanted to understand whether large-scale census data can show patterns related to divorce status.
 
----
+My main goal was not to say that one variable directly causes divorce. Instead, I wanted to use data science methods to explore which variables are related to divorce and whether these variables can be used to build a predictive model.
 
 ## Data Source
-The dataset was obtained from **IPUMS USA (ACS 2023 sample)**.
 
-Selected variables:
-- AGE (Age)
-- MARST (Marital Status)
-- EDUC (Education Level)
-- INCWAGE (Income)
+The data was collected from IPUMS USA, which provides census and American Community Survey microdata. I used an IPUMS extract that includes individual-level demographic and socio-economic variables.
 
----
+The main variables used in the project include marital status, age, sex, education, employment status, wage income, and other available socio-economic variables such as poverty ratio and work hours when they exist in the extract.
 
-## Data Preparation
-The dataset was cleaned and transformed before analysis:
+The target variable was created from marital status:
 
-- Invalid or unclear marital statuses were removed
-- A binary variable `divorced` was created:
-  - 1 → divorced or separated
-  - 0 → not divorced
+- `divorced = 1` for divorced or separated individuals
+- `divorced = 0` for other previously married individuals
 
-- A binary variable `young` was created:
-  - 1 → age ≤ 25
-  - 0 → age > 25
+I removed never-married individuals from the analysis because they cannot be divorced. This makes the comparison more meaningful.
 
-- Individuals with zero income were excluded from income analysis
+## Data Analysis
 
----
+The project has two main parts: exploratory data analysis and machine learning.
 
-## Exploratory Data Analysis (EDA)
-Several visualizations were created to explore patterns:
+In the exploratory data analysis, I first cleaned the data and created the target variable. Then I examined the distribution of divorce status and compared divorce rates across age groups, education levels, income groups, and employment status. I also used a correlation heatmap to understand the relationships between numeric variables.
 
-- Distribution plots of age, education, and employment status
-- Correlation matrix between key variables
-- Boxplot of age vs divorce
+In the machine learning part, I used both original IPUMS variables and engineered features. The engineered features include log income, income groups, age groups, high education indicator, employment indicator, age squared, and interaction features such as age-income and education-income interactions. These additions make the model more detailed than using only basic variables.
 
-Key observations:
-- Divorce rates increase with age up to middle age
-- Higher education levels tend to have lower divorce rates
-- Lower income groups show higher divorce rates
-- No single variable fully explains divorce, suggesting multiple interacting factors
-
----
-
-## Machine Learning Models
-
-The following models were implemented:
+I compared four classification models:
 
 - Logistic Regression
-- K-Nearest Neighbors (KNN)
 - Decision Tree
 - Random Forest
+- Gradient Boosting
 
-To address class imbalance, `class_weight = balanced` was used where applicable.
-
----
-
-## Model Results
-
-The following models were tested:
-
-- Logistic Regression
-- K-Nearest Neighbors (KNN)
-- Decision Tree
-- Random Forest
-
-Because the dataset is imbalanced, recall was prioritized over accuracy.
-
-Main results:
-
-- Logistic Regression achieved the highest recall and was selected as the best model.
-- Decision Tree and Random Forest also performed well in recall.
-- KNN achieved high accuracy but very low recall, meaning it failed to identify divorced individuals effectively.
-
-Overall, Logistic Regression was the most suitable model for this project because the main goal was to correctly identify divorced individuals in the minority class.
----
-
-## Confounding Variables
-
-One limitation of this analysis is the presence of confounding variables.
-
-Age, education, and income are interrelated:
-- Older individuals may have different education levels
-- Income is often influenced by education and employment
-- These relationships make it difficult to isolate individual effects
-
-Therefore, some observed relationships may be indirect rather than causal.
-
----
+Since the target variable is imbalanced, I did not rely only on accuracy. I also used precision, recall, F1 score, ROC-AUC, confusion matrices, and ROC curves. Logistic Regression used `class_weight="balanced"` to handle class imbalance.
 
 ## Findings
 
-The analysis shows that divorce is significantly related to socio-economic factors:
+The exploratory analysis showed that divorce status is related to multiple variables. Age is an important factor because divorce rates are not the same across all age groups. Income and education also show visible differences across divorce status, although these relationships should not be interpreted as direct causality.
 
-- Age has a strong relationship with divorce
-- Education level affects divorce probability
-- Income has a negative relationship with divorce
-- Younger individuals show different divorce patterns
+The machine learning results show that divorce is difficult to predict perfectly from census variables alone. This is expected because divorce depends on many personal and relationship-level factors that are not included in census data. However, the models were still useful for finding patterns.
 
-Overall, socio-economic conditions play an important role in marital stability.
+Tree-based models such as Random Forest and Gradient Boosting were useful because they can capture non-linear relationships. Random Forest also helped show feature importance, which made the model easier to interpret. The most useful predictors generally came from age, income, education, employment, and engineered interaction features.
 
----
+Overall, the project shows that census data can reveal meaningful patterns about divorce, but it cannot fully explain such a complex life outcome by itself.
 
-## Repository Structure
-├── eda.ipynb
-├── ml_analysis.ipynb
-├── README.md
-├── requirements.txt
-├── data/ (ignored)
+## Limitations and Future Work
 
-## Notebooks
+The biggest limitation is that the data is observational. This means the project cannot prove that one factor causes divorce. It can only show relationships and predictive patterns.
 
-- `eda.ipynb`: Contains data cleaning and exploratory data analysis (plots and visual insights)
-- `ml_analysis.ipynb`: Contains machine learning models and performance evaluation
+Another limitation is that many important personal factors are not included in the dataset. For example, the data does not include relationship quality, family conflict, cultural expectations, religion, or detailed household history. These factors could be important for understanding divorce more deeply.
 
-## Reproducibility
+The machine learning model also uses a sample of the full dataset to make the notebook easier to run. Future work could train the models on the full dataset with more computing power. It could also include more IPUMS variables, compare different years, or analyze differences across states, gender groups, or education levels in more detail.
 
-To reproduce this project:
+In the future, I would also like to test more advanced models and add stronger explanations using SHAP values or other interpretability tools. This would make it easier to understand how each variable affects model predictions.
 
-1. Install required libraries:
-   pip install -r requirements.txt
-2. Run `eda.ipynb` first  
-3. Then run `ml_analysis.ipynb`
+## AI Assistance Note
+
+AI tools were used for help with code organization, debugging suggestions, and wording support. The project topic, dataset, analysis decisions, notebook execution, and final interpretation were checked and completed by me.
